@@ -12,7 +12,7 @@ router.route('/signup')
 	.post(validateBody(schemas.authSchema), UsersController.signUp);
 //Doesnot require validation||passport does that
 router.route('/signin')
-	.post(UsersController.signIn);
+	.post(validateBody(schemas.authSchema), passport.authenticate('local', {session: false}), UsersController.signIn);
 
 router.route('/secret')
 	.get(passport.authenticate('jwt', {session: false}), UsersController.secret);

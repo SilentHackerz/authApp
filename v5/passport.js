@@ -32,17 +32,26 @@ passport.use(new JWTStrategt({
 
 passport.use(new localStartegy({
 	usernameField: 'email'
-}, async(email, password, done) => {
+}, async (email, password, done) => {
 	//find the user given by the email
-	var user = await user.findOne({ email });
-	// If not found user
-	if(!user){
-		return done(null, false);
+	try {
+		var user = await User.findOne({ email });
+		// If not found user
+		if(!user){
+			return done(null, false);
+		}
+		//check password is correct
+		var isMatch = await user.isValidPassword(password);
+		
+		//If not, handle it
+
+		if(!isMatch){
+			return done(null, false);
+		}
+
+		//Otherwise return the user
+		done(null,user);
+	} catch(error){
+		done(error, false);
 	}
-	//check password is correct
-
-	//If not, handle it
-
-	//Otherwise return the user
-
 }));

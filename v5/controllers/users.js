@@ -29,7 +29,9 @@ module.exports = {
 	},
 	signIn: async (req, res, next) =>{
 	// generate token
-		console.log('You are at SignIp');
+		console.log('You are at SignIn');
+				res.send('you successfully loged in!!!')
+
 	},
 	secret: async (req, res, next) =>{
 		console.log('You are at secret');
